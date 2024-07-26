@@ -1,4 +1,4 @@
-<!-- html del cual sera el contenido dinamico de las apis -->
+<!-- 
     <table>
         <tr> 
           <th >Pokemon</th>
@@ -37,6 +37,30 @@
             <td >ver detalle</td>
           </tr>
       </table>
+ -->
+
+ <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="name">
+    <th  class="m6" mat-header-cell *matHeaderCellDef> Pokemon </th> 
+    <td class="m6" mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container  matColumnDef="detail">
+    <th class="m4" mat-header-cell *matHeaderCellDef> Detalles del Pokemon </th>
+    <td class="m4" mat-cell *matCellDef="let element" (click)="activeDetail(1)"> {{element.detail}} </td>
+  </ng-container>
+
+  
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
 
-      <!-- maximo son 8 registros -->
+

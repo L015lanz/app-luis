@@ -1,18 +1,4 @@
-/* .body-table{
-    border: 1px solid black;
-    margin: 0;
-}
-
-.head-table{
-    border: 1px solid black;
-    margin:0;
-}
-
-.content-table{
-    border: 1px solid black;
-}
- */
-
+/* 
  table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -32,4 +18,22 @@
   td{
     cursor: pointer;
   }
+   */
+
+
+   table {
+    width: 40rem;
+  }
+
+  .m4 {
+    width: 40%!important;
+  }
   
+
+  .m6{
+    width: 60%!important;
+  }
+
+  td:nth-child(even) {
+    cursor: pointer;
+}

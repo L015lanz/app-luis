@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeModule } from './homepage/home.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -14,8 +18,11 @@ import { HomeModule } from './homepage/home.module';
     BrowserModule,
     AppRoutingModule,
     HomeModule,    
+    HttpClientModule
+    ],
+  providers: [
+    provideAnimationsAsync()
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
