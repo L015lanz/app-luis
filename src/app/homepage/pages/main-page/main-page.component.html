@@ -10,10 +10,10 @@
         <hr>
 
         <section class="body-tab">
-      <home-dynamic-body></home-dynamic-body>
+      <home-dynamic-body (onDetail)="showDetail($event)"></home-dynamic-body>
             <!-- en este apartado ira el cuerpo dinamica -->
              
     </section>
     </div>
 </div>
-<home-dynamic-modal *ngIf="detailFlag"  ></home-dynamic-modal>
+<home-dynamic-modal *ngIf="detailFlag" (onDeactivate)="hideDetail($event)"></home-dynamic-modal>

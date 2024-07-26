@@ -9,6 +9,7 @@ export class MainPageComponent {
     public tab1:boolean=true;
     public tab2:boolean=false;      
     public detailFlag:boolean=false;
+    public detailID:number=0;
 
   public activeTab(tab:number):void{
 
@@ -21,7 +22,12 @@ export class MainPageComponent {
       }
   }
 
-  public showDetail(detail:boolean):void{
-    this.detailFlag=detail;
+  public showDetail(detailID:number):void{
+    this.detailFlag=true;
+    this.detailID=detailID
+  }
+
+  public hideDetail(detailFlag:boolean){
+    this.detailFlag=detailFlag;
   }
 }

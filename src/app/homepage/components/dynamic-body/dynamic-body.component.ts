@@ -8,14 +8,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class DynamicBodyComponent {
   
   @Output()
-  public showDetail: EventEmitter<Boolean> = new EventEmitter();
+  public onDetail: EventEmitter<number> = new EventEmitter();
 
-  public activeDetail():void{
-    this.showDetail.emit(true);
+  public activeDetail(id:number):void{
+    this.onDetail.emit(id);
   }
 
-  
-  public deactiveDetail():void{
-    this.showDetail.emit(false);
-  }
 }
