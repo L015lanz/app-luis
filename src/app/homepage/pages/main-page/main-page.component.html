@@ -1,0 +1,19 @@
+
+<div class="main-container">
+
+    <div class="tab-container">
+        <section class="tab-layout">
+            <div (click)="activeTab(1)" class="tab tab-1" [ngClass]="{'tab-active':tab1}">REST</div>
+            <div  (click)="activeTab(2)" class="tab tab-2" [ngClass]="{'tab-active':tab2}">SOAP</div>
+
+        </section>
+        <hr>
+
+        <section class="body-tab">
+      <home-dynamic-body></home-dynamic-body>
+            <!-- en este apartado ira el cuerpo dinamica -->
+             
+    </section>
+    </div>
+</div>
+<home-dynamic-modal *ngIf="detailFlag"  ></home-dynamic-modal>

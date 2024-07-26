@@ -1,0 +1,31 @@
+/* .body-table{
+    border: 1px solid black;
+    margin: 0;
+}
+
+.head-table{
+    border: 1px solid black;
+    margin:0;
+}
+
+.content-table{
+    border: 1px solid black;
+}
+ */
+
+ table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 40rem;
+}
+  
+  td, th {
+    border: 1.5px solid #282828;
+    text-align: center;
+    padding: 8px;
+  }
+
+  th{
+    background-color: #E8F6FF;
+  }
+  
