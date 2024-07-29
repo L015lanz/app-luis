@@ -1,83 +1,95 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { xml2js } from 'xml-js';
+import { pokemonCollect } from '../Interfaces/pokemonCollect.interface';
+import { Pokemon } from '../Interfaces/pokemon.interface';
+import { Stat } from '../Interfaces/stat.interface';
 
 
 @Injectable({providedIn: 'root'})
 export class RestService {
 
-    private serviceURLRest:string= 'https://pokeapi.co/api/v2/'
+    private serviceMainUrlAPI:string= 'https://pokeapi.co/api/v2/'
+    public offset:number=1;
+    public pokemonCollectJson: pokemonCollect = {
+      next:null,
+      previous:null,
+       pokemons:null 
+    };
+    
     constructor(private http:HttpClient) { }
 
-
-
-    //codigo destinado a buscar dentro de Pokemon
-    public searchInREST(id:number):void{
+    public searchPokemonCollect():void{
       const params = new HttpParams()
-      .set('offset',id)
+      .set('offset',this.offset-1)
       .set('limit',5)
       ;
 
-      this.http.get(`${this.serviceURLRest}pokemon?${params}`)
+      this.http.get(`${this.serviceMainUrlAPI}pokemon?${params}`)
       .subscribe(res =>{
-          console.log(res)
+          this.formatToPokemonCollect(res);
       });
   }
 
-
-//parte SOAP
-// private readonly mainUrl = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso";
-
-//     //private serviceURLSoap = `http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso`;
+  private formatToPokemonCollect(pokemons: Object) {
+    const pokemonValues = Object.values(pokemons);
     
-//     private soapRequestPayload: string = `
-//     <?xml version="1.0" encoding="utf-8"?>
-// <soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-//   <soap12:Body>
-//     <ListOfCountryNamesByName xmlns="http://www.oorsprong.org/websamples.countryinfo">
-//     </ListOfCountryNamesByName>
-//   </soap12:Body>
-// </soap12:Envelope>`;
-      
+    this.pokemonCollectJson.next = pokemonValues[1] ;
+    this.pokemonCollectJson.previous = pokemonValues[2] ;
+    this.formatToPokemonDetail(pokemonValues[3])
+  }
+
+  private formatToPokemonDetail(pokemonsCollect: { name: string, url: string }[]) {
    
+    let id:number =this.offset;
+    pokemonsCollect.forEach(element => {
+      this.pokemonInformation(id);
+      id+=1;
+    });
+  }
+
+  private pokemonInformation(id :number){
+    let pokemonArray:Pokemon[]=[];
+    // pokemonArray.push({name: element.name});
+    const endpoint = this.serviceMainUrlAPI.concat(`pokemon/${id}/`);
+
+    this.http.get(endpoint)
+    .subscribe(res =>{
+      
+     
+      const pokemon: {
+        name:string,  
+        weight:number
+        sprites:{
+                 front_default:string
+                },
+        forms:  [{
+                  name:string
+                  }],
+        abilities:[{
+          ability:{
+            name:string
+          }
+        }],
+        species: {
+          name:string
+        },
+        base_experience:number,
+        stats:[{base_stat:number,
+                stat:{
+                  name:string
+                }
+        }]
+      
+      } = JSON.parse(JSON.stringify(res));
+
+      
     
-//     public searchInSoap(){
-//         const headers = {
-//             'Content-Type': 'text/xml',
-//             'Access-Control-Allow-Origin':'*',
-//             'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-//             'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'       
-//           };
-          
-//         const requestOptions: any =  { 
-//             observe: 'body',
-//             headers,
-//             responseType: 'text' 
-//           };
-
-//           return this.http.post(this.mainUrl, this.soapRequestPayload, requestOptions);
+      console.log(pokemon.stats[0].base_stat)
+      });
+  }
   
-//     }
-//     public getSoapRequestPayload() {
-//         return this.soapRequestPayload;
-//     }
-
-//     public xmlToJson(xml: any): Object {
-//         return xml2js(xml, 
-//           {
-//            compact: true,
-//            trim: true,
-//            alwaysChildren: true,
-//            ignoreInstruction: true,
-//            ignoreDeclaration: true,
-//            ignoreAttributes: true,
-//            ignoreComment: true,
-//            ignoreCdata: true,
-//            ignoreDoctype: true,
-//           });
-//       };
-
 }
+
 
 
 
